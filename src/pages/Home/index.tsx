@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SliderArrow from "../../components/SliderArrow";
+import Footer from "../../components/Footer";
 
 type Props = {};
 
@@ -165,6 +166,8 @@ const HomePage = (props: Props) => {
 
         <div className="w-[1600px] max-w-full mx-auto h-[2px] bg-primary opacity-[0.2] mt-[89px]"></div>
       </main>
+
+      <Footer />
     </div>
   );
 };
