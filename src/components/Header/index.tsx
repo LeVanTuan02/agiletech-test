@@ -33,11 +33,11 @@ const Header = (props: Props) => {
       </div>
 
       <div className={`mt-[130px] ${styles.header__bottom}`}>
-        <h1 className="text-secondary leading-[88px] font-bold text-[80px] w-[640px] mb-[50px]">
+        <h1 className="text-secondary leading-[88px] font-bold text-[80px] w-[640px] mb-[55px]">
           Save your data storage here.
         </h1>
 
-        <p className="font-avenir font-medium w-[378px] text-tertiary text-lg leading-[28.8px] mb-[50px]">
+        <p className="font-avenir font-medium w-[378px] text-tertiary text-lg leading-[28.8px] mb-[55px]">
           Data Warehouse is a data storage area that has been tested for security, so you can store your data here
           safely but not be afraid of being stolen by others.
         </p>

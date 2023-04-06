@@ -6,8 +6,8 @@ const Footer = (props: Props) => {
   return (
     <div className="my-container mx-auto mt-[96px] mb-[125px] font-avenir text-secondary">
       <div className="flex">
-        <div className="w-[43%]">
-          <Link to="" className="flex items-center mb-[67px]">
+        <div className="w-[42.5%]">
+          <Link to="" className="flex items-center mb-[65px]">
             <img src="/images/Logo.png" alt="Logo" />
             <span className="font-black text-xl leading-8 block ml-5">DataWarehouse</span>
           </Link>
@@ -17,14 +17,14 @@ const Footer = (props: Props) => {
             Bahagia Ave Street PRBW 29281
           </p>
 
-          <p className="mt-[10px] text-secondary leading-[28.8px]">
+          <p className="mt-[18px] text-secondary leading-[28.8px]">
             <a href="mailto:info@warehouse.project">info@warehouse.project</a> <br />
             <a href="tel:1-232-3434">1-232-3434</a> (Main)
           </p>
         </div>
 
-        <div>
-          <span className="font-black mb-[30px]">About</span>
+        <div className="w-[19.5%]">
+          <span className="font-black mb-[35px] block mt-[10px]">About</span>
 
           <ul className="leading-10">
             <li>
@@ -42,8 +42,8 @@ const Footer = (props: Props) => {
           </ul>
         </div>
 
-        <div>
-          <span className="font-black mb-[30px]">Help</span>
+        <div className="w-[19%]">
+          <span className="font-black mb-[35px] block mt-[10px]">Help</span>
 
           <ul className="leading-10">
             <li>
@@ -65,7 +65,7 @@ const Footer = (props: Props) => {
         </div>
 
         <div>
-          <span className="font-black mb-[30px]">Social Media</span>
+          <span className="font-black mb-[35px] block mt-[10px]">Social Media</span>
 
           <ul className="flex items-center">
             <li className="w-[50px] h-[50px] mr-[14px] rounded-full bg-secondary opacity-10"></li>
@@ -75,8 +75,8 @@ const Footer = (props: Props) => {
         </div>
       </div>
 
-      <div className="mt-[94px] flex items-center justify-between">
-        <p className="text-xs leading-[22px]">
+      <div className="mt-[80px] flex flex-1 items-center justify-between">
+        <p className="text-xs leading-[22px] pt-[15px]">
           © Datawarehouse™, 2020. All rights reserved. <br />
           Company Registration Number: 21479524.
         </p>
