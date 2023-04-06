@@ -8,7 +8,7 @@ const Header = (props: Props) => {
     <div className="my-container mx-auto mt-[48px]">
       <div className="flex items-center justify-between">
         <NavLink to="/">
-          <img src="/images/Logo.png" />
+          <img src="/images/Logo.png" alt="Logo" />
         </NavLink>
 
         <div className="flex">
