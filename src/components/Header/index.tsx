@@ -36,7 +36,7 @@ const Header = (props: Props) => {
           ) : (
             <>
               <Link
-                to="/profile"
+                to="/profile/posts"
                 className="mb-3 md:mb-0 ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
               >
                 Profile

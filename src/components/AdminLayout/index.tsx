@@ -28,7 +28,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
           <ul>
             <li className="ml-[34px] mb-[10px] text-xl leading-8 text-secondary">
-              <Link to="/profile">Posts</Link>
+              <Link to="/profile/posts">Posts</Link>
             </li>
             <li className="ml-[34px] mb-[10px] text-xl leading-8 text-secondary">
               <button onClick={handleSignout}>Logout</button>

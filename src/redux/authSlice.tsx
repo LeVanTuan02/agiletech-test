@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthApi } from "../api/authApi";
 import { RootState } from "./store";
+import { ACCESS_TOKEN_STORAGE_KEY } from "../constants";
 
 interface AuthState {
   isLogged: boolean;
@@ -20,12 +21,14 @@ const authSlice = createSlice({
   reducers: {
     signout: (state) => {
       state.isLogged = false;
+      localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(signin.fulfilled, (state, { payload }) => {
       if (payload.accessToken) {
         state.isLogged = true;
+        localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, JSON.stringify(payload.accessToken));
       }
     });
   },

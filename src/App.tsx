@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     element: <Signin />,
   },
   {
-    path: "/profile",
+    path: "/profile/posts",
     element: (
       <AdminLayout>
         <ListPost />

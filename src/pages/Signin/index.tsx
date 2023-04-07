@@ -31,7 +31,7 @@ const Signin = (props: Props) => {
       const { payload } = await dispatch(signin(data));
       if (payload.accessToken) {
         toast.success("Đăng nhập thành công");
-        navigate("/profile");
+        navigate("/profile/posts");
       } else {
         toast.info("Thông tin đăng nhập không chính xác");
       }

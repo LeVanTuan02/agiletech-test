@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ACCESS_TOKEN_STORAGE_KEY } from "../constants";
 
 const instance = axios.create({
   baseURL: "https://test-react.agiletech.vn",
@@ -8,6 +9,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY) as string);
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
     return config;
   },
   function (error) {
