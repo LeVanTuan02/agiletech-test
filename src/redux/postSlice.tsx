@@ -5,14 +5,14 @@ import { RootState } from "./store";
 
 interface PostState {
   posts?: Post[];
-  // post?: Post | {};
+  post?: Post | {};
   pagination: Pagination;
   tags: string[];
 }
 
 const initialState: PostState = {
   posts: [],
-  // post: {},
+  post: {},
   pagination: {
     totalPage: 0,
     limit: 0,
@@ -26,6 +26,10 @@ export const getPosts = createAsyncThunk("post/getPosts", async (params?: PostPa
   return PostApi.getAll(params);
 });
 
+export const getPost = createAsyncThunk("post/getPost", async (id: string) => {
+  return PostApi.getPost(id);
+});
+
 export const getTags = createAsyncThunk("post/getTags", async () => {
   return PostApi.getTags();
 });
@@ -36,6 +40,10 @@ export const addPost = createAsyncThunk("post/addPost", async (data: PostData) =
 
 export const removePost = createAsyncThunk("post/removePost", async (id: string) => {
   return PostApi.removePost(id);
+});
+
+export const updatePost = createAsyncThunk("post/update", async (data: Post) => {
+  return PostApi.updatePost(data);
 });
 
 const postSlice = createSlice({
@@ -51,6 +59,10 @@ const postSlice = createSlice({
         currentPage: payload.current_page,
         total: payload.total,
       };
+    });
+
+    builder.addCase(getPost.fulfilled, (state, { payload }) => {
+      state.post = payload;
     });
 
     builder.addCase(getTags.fulfilled, (state, { payload }) => {

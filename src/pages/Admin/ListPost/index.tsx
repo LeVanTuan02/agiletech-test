@@ -77,7 +77,7 @@ const ListPost = (props: Props) => {
     <div>
       <div className="flex flex-wrap items-center">
         <Link
-          to="/posts/add"
+          to="/profile/posts/add"
           className="mb-[35px] w-[252px] max-w-full h-[58px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
         >
           Add new
@@ -133,9 +133,12 @@ const ListPost = (props: Props) => {
               </td>
               <td className="p-3 text-xl border border-black text-center bg-[#D9D9D9]">
                 <div className="flex justify-center">
-                  <button className="px-3 transition hover:opacity-50">
+                  <Link
+                    to={`/profile/posts/${item.id}/${item.title}/update`}
+                    className="px-3 transition hover:opacity-50"
+                  >
                     <FontAwesomeIcon icon={faPen} />
-                  </button>
+                  </Link>
                   <button onClick={() => handleRemovePost(item.id)} className="px-3 transition hover:opacity-50">
                     <FontAwesomeIcon icon={faTrash} />
                   </button>

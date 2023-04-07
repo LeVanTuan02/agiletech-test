@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/posts/add",
+    path: "/profile/posts/add",
     element: (
       <AdminLayout>
         <AddPost />
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/posts/:id/update",
+    path: "/profile/posts/:id/:title/update",
     element: (
       <AdminLayout>
         <UpdatePost />
