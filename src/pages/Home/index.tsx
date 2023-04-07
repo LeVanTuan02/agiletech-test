@@ -1,17 +1,29 @@
-import Header from "../../components/Header";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Header from "../../components/Header";
 import SliderArrow from "../../components/SliderArrow";
 import Footer from "../../components/Footer";
+import { GalleryResponse } from "../../models/gallery";
+import { GalleryApi } from "../../api/galleryApi";
+
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 
 type Props = {};
 
 const HomePage = (props: Props) => {
+  const [galleries, setGalleries] = useState<GalleryResponse[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await GalleryApi.getAll();
+      setGalleries(data);
+    })();
+  }, []);
+
   const settings = {
-    // autoplay: true,
+    autoplay: true,
     infinite: true,
     dots: true,
     nextArrow: <SliderArrow direction="right" onClick={() => {}} />,
@@ -136,37 +148,24 @@ const HomePage = (props: Props) => {
 
             <div className="px-3">
               <Slider {...settings} className="w-[932px] max-w-full mx-auto relative">
-                <div>
-                  <div className="mb-5 flex flex-col items-center md:items-start md:flex-row h-[400px] md:h-[330px] pt-[60px] md:pl-[101px] bg-white rounded-[20px] mx-auto shadow-[0px_20px_0px_rgba(0,0,0,0.1)]">
-                    <img src="/images/Ellipse 76.png" alt="" className="w-[130px] h-[90px]" />
-                    <div className="pt-5 md:pl-[44px] text-center md:text-left font-avenir flex-1">
-                      <span className="block leading-[28.8px] text-lg font-black text-secondary">John Fang </span>
-                      <span className="block text-primary font-medium text-sm leading-[22px] mb-[16px]">
-                        wordfaang.com
-                      </span>
-                      <p className="text-tertiary text-lg leading-[33px] w-[382px]">
-                        Suspendisse ultrices at diam lectus nullam. Nisl, sagittis viverra enim erat tortor ultricies
-                        massa turpis. Arcu pulvinar aenean nam laoreet nulla.
-                      </p>
+                {galleries?.map((item) => (
+                  <div key={item.id}>
+                    <div className="mb-5 flex flex-col items-center md:items-start md:flex-row h-[400px] md:h-[330px] pt-[60px] md:pl-[101px] bg-white rounded-[20px] mx-auto shadow-[0px_20px_0px_rgba(0,0,0,0.1)]">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.id}
+                        className="w-[130px] h-[90px] object-cover rounded-[50%]"
+                      />
+                      <div className="pt-5 md:pl-[44px] text-center md:text-left font-avenir flex-1">
+                        <span className="block leading-[28.8px] text-lg font-black text-secondary">John Fang </span>
+                        <span className="block text-primary font-medium text-sm leading-[22px] mb-[16px]">
+                          wordfaang.com
+                        </span>
+                        <p className="text-tertiary text-lg leading-[33px] pr-3">{item.desctiption}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div>
-                  <div className="mb-5 flex flex-col items-center md:items-start md:flex-row h-[400px] md:h-[330px] pt-[60px] md:pl-[101px] bg-white rounded-[20px] mx-auto shadow-[0px_20px_0px_rgba(0,0,0,0.1)]">
-                    <img src="/images/Ellipse 76.png" alt="" className="w-[130px] h-[90px]" />
-                    <div className="pt-5 md:pl-[44px] text-center md:text-left font-avenir flex-1">
-                      <span className="block leading-[28.8px] text-lg font-black text-secondary">John Fang </span>
-                      <span className="block text-primary font-medium text-sm leading-[22px] mb-[16px]">
-                        wordfaang.com
-                      </span>
-                      <p className="text-tertiary text-lg leading-[33px] w-[382px]">
-                        Suspendisse ultrices at diam lectus nullam. Nisl, sagittis viverra enim erat tortor ultricies
-                        massa turpis. Arcu pulvinar aenean nam laoreet nulla.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </Slider>
             </div>
           </div>
