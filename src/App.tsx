@@ -1,6 +1,10 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/Home";
 import Signin from "./pages/Signin";
+import ListPost from "./pages/Admin/ListPost";
+import AdminLayout from "./components/AdminLayout";
+import AddPost from "./pages/Admin/AddPost";
+import UpdatePost from "./pages/Admin/UpdatePost";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +14,30 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <Signin />,
+  },
+  {
+    path: "/profile",
+    element: (
+      <AdminLayout>
+        <ListPost />
+      </AdminLayout>
+    ),
+  },
+  {
+    path: "/posts/add",
+    element: (
+      <AdminLayout>
+        <AddPost />
+      </AdminLayout>
+    ),
+  },
+  {
+    path: "/posts/:id/update",
+    element: (
+      <AdminLayout>
+        <UpdatePost />
+      </AdminLayout>
+    ),
   },
 ]);
 
