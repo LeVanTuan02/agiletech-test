@@ -7,6 +7,7 @@ import { getPosts, getTags, removePost, selectPaginationPost, selectPosts, selec
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import { updateTitle } from "../../../utils";
 
 type Props = {};
 
@@ -37,6 +38,8 @@ const ListPost = (props: Props) => {
 
   // get tags
   useEffect(() => {
+    updateTitle("Quản lý bài viết");
+
     (async () => {
       dispatch(getTags());
     })();

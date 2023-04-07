@@ -8,6 +8,7 @@ import { addPost, getTags } from "../../../redux/postSlice";
 import { useSelector } from "react-redux";
 import { selectTags } from "../../../redux/postSlice";
 import { useNavigate } from "react-router-dom";
+import { updateTitle } from "../../../utils";
 
 type AddPostProps = {};
 
@@ -30,6 +31,8 @@ const AddPost = ({}: AddPostProps) => {
 
   // get tags
   useEffect(() => {
+    updateTitle("Thêm bài viết");
+
     (async () => {
       dispatch(getTags());
     })();

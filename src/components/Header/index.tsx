@@ -15,7 +15,7 @@ const Header = (props: Props) => {
   const handleSignout = () => {
     dispatch(signout());
     toast.success("Đăng xuất thành công");
-    navigate("/");
+    navigate("/signin");
   };
 
   return (

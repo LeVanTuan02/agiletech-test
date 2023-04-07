@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { selectTags } from "../../../redux/postSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "../../../models/post";
+import { updateTitle } from "../../../utils";
 
 type UpdatePostProps = {};
 
@@ -37,8 +38,9 @@ const UpdatePostPage = ({}: UpdatePostProps) => {
     reset,
   } = useForm<InputsType>({ resolver: yupResolver(schema) });
 
-  // get tags
   useEffect(() => {
+    updateTitle("Cập nhật bài viết");
+
     (async () => {
       dispatch(getTags());
 

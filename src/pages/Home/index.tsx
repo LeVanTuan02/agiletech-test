@@ -9,6 +9,7 @@ import { GalleryApi } from "../../api/galleryApi";
 
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import { updateTitle } from "../../utils";
 
 type Props = {};
 
@@ -16,6 +17,8 @@ const HomePage = (props: Props) => {
   const [galleries, setGalleries] = useState<GalleryResponse[]>([]);
 
   useEffect(() => {
+    updateTitle("Trang chủ");
+
     (async () => {
       const data = await GalleryApi.getAll();
       setGalleries(data);

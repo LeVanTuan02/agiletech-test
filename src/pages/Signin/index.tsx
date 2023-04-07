@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { signin } from "../../redux/authSlice";
+import { useEffect } from "react";
+import { updateTitle } from "../../utils";
 
 type Props = {};
 
@@ -19,6 +21,8 @@ const schema = yup.object().shape({
 const Signin = (props: Props) => {
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
+
+  useEffect(() => updateTitle("Đăng nhập"), []);
 
   const {
     register,
