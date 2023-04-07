@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthApi } from "../api/authApi";
 import { RootState } from "./store";
 import { ACCESS_TOKEN_STORAGE_KEY } from "../constants";
