@@ -25,3 +25,9 @@ export interface PostParams {
   title?: string;
   tags?: string;
 }
+
+export interface PostData {
+  title: string;
+  description: string;
+  tags: string[];
+}

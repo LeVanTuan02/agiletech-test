@@ -1,25 +1,90 @@
-import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { addPost, getTags } from "../../../redux/postSlice";
+import { useSelector } from "react-redux";
+import { selectTags } from "../../../redux/postSlice";
+import { useNavigate } from "react-router-dom";
 
-type Props = {};
+type AddPostProps = {};
 
-const AddPost = (props: Props) => {
+interface InputsType {
+  title: string;
+  description: string;
+}
+
+const schema = yup.object().shape({
+  title: yup.string().required("Vui lòng nhập tiêu đề bài viết"),
+  description: yup.string().required("Vui lòng nhập mô tả bài viết"),
+});
+
+const AddPost = ({}: AddPostProps) => {
+  const dispatch = useDispatch<any>();
+  const tags = useSelector(selectTags);
+  const [listTag, setListTag] = useState<string[]>([]);
+
+  const navigate = useNavigate();
+
+  // get tags
+  useEffect(() => {
+    (async () => {
+      dispatch(getTags());
+    })();
+  }, []);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InputsType>({ resolver: yupResolver(schema) });
+
+  const onSubmit: SubmitHandler<InputsType> = async (data) => {
+    try {
+      await dispatch(
+        addPost({
+          ...data,
+          tags: listTag,
+        }),
+      ).unwrap();
+      toast.success("Thêm bài viết thành công");
+      navigate("/profile/posts");
+    } catch (error) {
+      toast.error("Có lỗi xảy ra, vui lòng thử lại");
+    }
+  };
+
+  const handleCheckTag = (tag: string) => {
+    setListTag((prev) => {
+      const isChecked = prev.includes(tag);
+
+      if (!isChecked) {
+        return [...prev, tag];
+      } else {
+        return prev.filter((item) => item !== tag);
+      }
+    });
+  };
+
   return (
     <div>
       <h1 className="font-medium text-2xl uppercase text-center block mb-10">Thêm bài viết mới</h1>
 
-      <form action="">
+      <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="form__add-post-title" className="block font-medium text-gray-700">
             Tiêu đề bài viết
           </label>
           <input
             type="text"
-            name="form__add-post-title"
+            {...register("title")}
             id="form__add-post-title"
             className="py-2 px-3 mt-1 border focus:ring-primary focus:border-primary focus:outline-none block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             placeholder="Nhập tiêu đề bài viết"
           />
-          <span className="text-sm mt-2 text-red-500">Vui lòng nhập tiêu đề bài viết</span>
+          <span className="text-sm mt-2 text-red-500">{errors.title?.message}</span>
         </div>
 
         <div className="mb-3">
@@ -29,51 +94,36 @@ const AddPost = (props: Props) => {
 
           <textarea
             rows={10}
-            name="form__add-post-desc"
+            {...register("description")}
             id="form__add-post-desc"
             className="py-2 px-3 mt-1 border focus:ring-primary focus:border-primary focus:outline-none block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             placeholder="Nhập tiêu đề bài viết"
           ></textarea>
-          <span className="text-sm mt-2 text-red-500">Vui lòng nhập tiêu đề bài viết</span>
+          <span className="text-sm mt-2 text-red-500">{errors.description?.message}</span>
         </div>
 
         <fieldset>
           <legend className="text-sm font-semibold leading-6 text-gray-900">Tags</legend>
-          <div className="space-y-6">
-            <div className="relative flex gap-x-3">
-              <div className="flex h-6 items-center">
-                <input
-                  id="html"
-                  name="html"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                />
-              </div>
-              <div className="text-sm leading-6">
-                <label htmlFor="html" className="font-medium text-gray-900">
-                  Html
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="relative flex gap-x-3">
-              <div className="flex h-6 items-center">
-                <input
-                  id="css"
-                  name="css"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                />
-              </div>
-              <div className="text-sm leading-6">
-                <label htmlFor="css" className="font-medium text-gray-900">
-                  Css
-                </label>
+          {tags.map((item, index) => (
+            <div className="space-y-6" key={index}>
+              <div className="relative flex gap-x-3">
+                <div className="flex h-6 items-center">
+                  <input
+                    id={item}
+                    checked={listTag.includes(item)}
+                    onChange={() => handleCheckTag(item)}
+                    type="checkbox"
+                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                </div>
+                <div className="text-sm leading-6">
+                  <label htmlFor={item} className="font-medium text-gray-900">
+                    {item}
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </fieldset>
 
         <button

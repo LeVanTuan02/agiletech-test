@@ -1,23 +1,23 @@
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "../../../components/Pagination";
 import { useSelector } from "react-redux";
-import { getPosts, selectPaginationPost, selectPosts } from "../../../redux/postSlice";
+import { getPosts, getTags, removePost, selectPaginationPost, selectPosts, selectTags } from "../../../redux/postSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { PostApi } from "../../../api/postApi";
+import Swal from "sweetalert2";
 
 type Props = {};
 
 const ListPost = (props: Props) => {
   const [title, setTitle] = useState<string>("");
   const [tag, setTag] = useState<string>("");
-  const [tags, setTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch<any>();
   const posts = useSelector(selectPosts);
+  const tags = useSelector(selectTags);
   const paginationPost = useSelector(selectPaginationPost);
 
   useEffect(() => {
@@ -38,8 +38,7 @@ const ListPost = (props: Props) => {
   // get tags
   useEffect(() => {
     (async () => {
-      const tagsPost = await PostApi.getTags();
-      setTags(tagsPost);
+      dispatch(getTags());
     })();
   }, []);
 
@@ -55,6 +54,24 @@ const ListPost = (props: Props) => {
       dispatch(getPosts(params));
     })();
   }, [title, tag]);
+
+  const handleRemovePost = (id: string) => {
+    Swal.fire({
+      title: "Bạn có chắc chắn muốn xóa bài viết?",
+      text: "Không thể hoàn tác sau khi xóa!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Hủy",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await dispatch(removePost(id)).unwrap();
+        Swal.fire("Thành công!", "Đã xóa bài viết", "success");
+      }
+    });
+  };
 
   return (
     <div>
@@ -119,7 +136,7 @@ const ListPost = (props: Props) => {
                   <button className="px-3 transition hover:opacity-50">
                     <FontAwesomeIcon icon={faPen} />
                   </button>
-                  <button className="px-3 transition hover:opacity-50">
+                  <button onClick={() => handleRemovePost(item.id)} className="px-3 transition hover:opacity-50">
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>

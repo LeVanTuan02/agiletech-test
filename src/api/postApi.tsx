@@ -1,4 +1,4 @@
-import { PostParams, PostResponse } from "../models/post";
+import { PostParams, PostResponse, PostData } from "../models/post";
 import instance from "./instance";
 
 export const PostApi = {
@@ -9,5 +9,11 @@ export const PostApi = {
   },
   getTags: (): Promise<string[]> => {
     return instance.get("/posts/tags");
+  },
+  addPost: (post: PostData): Promise<PostData> => {
+    return instance.post("/posts", post);
+  },
+  removePost: (id: string): Promise<string> => {
+    return instance.delete(`/posts/${id}`);
   },
 };
