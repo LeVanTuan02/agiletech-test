@@ -1,10 +1,22 @@
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { signout } from "../../redux/authSlice";
+import { toast } from "react-toastify";
 
 type AdminLayoutProps = {
   children: JSX.Element;
 };
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSignout = () => {
+    dispatch(signout());
+    toast.success("Đăng xuất thành công");
+    navigate("/");
+  };
+
   return (
     <div className="font-inter h-screen flex">
       <aside className="w-[320px] max-w-full bg-[#D9D9D9] hidden md:block">
@@ -17,7 +29,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             <Link to="/profile">Posts</Link>
           </li>
           <li className="ml-[34px] mb-[10px] text-xl leading-8 text-secondary">
-            <button>Logout</button>
+            <button onClick={handleSignout}>Logout</button>
           </li>
         </ul>
       </aside>

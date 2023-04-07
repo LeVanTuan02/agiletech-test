@@ -1,9 +1,23 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
+import { useSelector } from "react-redux";
+import { selectSttLogin, signout } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const isLogged = useSelector(selectSttLogin);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSignout = () => {
+    dispatch(signout());
+    toast.success("Đăng xuất thành công");
+    navigate("/");
+  };
+
   return (
     <div className="my-container mx-auto mt-[48px] px-3">
       <div className="flex items-center justify-between">
@@ -12,23 +26,30 @@ const Header = (props: Props) => {
         </NavLink>
 
         <div className="flex flex-wrap flex-1 justify-end">
-          <Link
-            to="/signin"
-            className="ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
-          >
-            Sign In
-          </Link>
+          {!isLogged ? (
+            <Link
+              to="/signin"
+              className="ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
+            >
+              Sign In
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/profile"
+                className="mb-3 md:mb-0 ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
+              >
+                Profile
+              </Link>
 
-          <Link
-            to="/profile"
-            className="mb-3 md:mb-0 ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
-          >
-            Profile
-          </Link>
-
-          <button className="ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]">
-            Logout
-          </button>
+              <button
+                onClick={handleSignout}
+                className="ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
+              >
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </div>
 
