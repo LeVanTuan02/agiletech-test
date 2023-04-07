@@ -5,23 +5,23 @@ type Props = {};
 
 const Header = (props: Props) => {
   return (
-    <div className="my-container mx-auto mt-[48px]">
+    <div className="my-container mx-auto mt-[48px] px-3">
       <div className="flex items-center justify-between">
         <NavLink to="/">
           <img src="/images/Logo.png" alt="Logo" />
         </NavLink>
 
-        <div className="flex">
+        <div className="flex flex-wrap flex-1 justify-end">
           <Link
             to="/signin"
             className="ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
           >
-            Signin
+            Sign In
           </Link>
 
           <Link
             to="/profile"
-            className="ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
+            className="mb-3 md:mb-0 ml-8 font-inter w-[208px] max-w-full h-[60px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
           >
             Profile
           </Link>
@@ -33,7 +33,7 @@ const Header = (props: Props) => {
       </div>
 
       <div className={`mt-[130px] ${styles.header__bottom}`}>
-        <h1 className="text-secondary leading-[88px] font-bold text-[80px] w-[640px] mb-[55px]">
+        <h1 className="text-secondary leading-[88px] font-bold text-[40px] md:text-[80px] w-[640px] max-w-full mb-[55px]">
           Save your data storage here.
         </h1>
 

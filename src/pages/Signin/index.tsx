@@ -14,17 +14,17 @@ const Signin = (props: Props) => {
       <div className="w-screen h-[calc(100vh-62px-36px)] flex items-center justify-center flex-col">
         <h1 className="text-[64px] leading-[102px] mb-[36px]">Sign In</h1>
 
-        <form action="">
+        <form action="" className="px-3 max-w-full">
           <label htmlFor="Username" className="leading-[25.6px] mb-3 block">
             Username
           </label>
 
           <input
             type="text"
-            className="w-[407px] h-[57px] px-3 outline-none border bg-[#FDFDFD] rounded-[6px] border-black mb-[46px]"
+            className="w-[407px] max-w-full h-[57px] px-3 outline-none border bg-[#FDFDFD] rounded-[6px] border-black mb-[46px]"
           />
 
-          <button className="bg-primary w-[413px] h-[53px] block rounded-full text-white transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]">
+          <button className="bg-primary w-[413px] max-w-full h-[53px] block rounded-full text-white transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]">
             Signin
           </button>
         </form>

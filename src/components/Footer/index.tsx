@@ -5,8 +5,8 @@ type Props = {};
 const Footer = (props: Props) => {
   return (
     <div className="my-container mx-auto mt-[96px] mb-[125px] font-avenir text-secondary">
-      <div className="flex">
-        <div className="w-[42.5%]">
+      <div className="flex flex-wrap">
+        <div className="w-full md:w-1/2 lg:w-[42.5%]">
           <Link to="" className="flex items-center mb-[65px]">
             <img src="/images/Logo.png" alt="Logo" />
             <span className="font-black text-xl leading-8 block ml-5">DataWarehouse</span>
@@ -23,7 +23,7 @@ const Footer = (props: Props) => {
           </p>
         </div>
 
-        <div className="w-[19.5%]">
+        <div className="w-full md:w-1/2 lg:w-[19.5%] mt-10 md:mt-0">
           <span className="font-black mb-[35px] block mt-[10px]">About</span>
 
           <ul className="leading-10">
@@ -42,7 +42,7 @@ const Footer = (props: Props) => {
           </ul>
         </div>
 
-        <div className="w-[19%]">
+        <div className="w-full md:w-1/2 lg:w-[19%] mt-10 lg:mt-0">
           <span className="font-black mb-[35px] block mt-[10px]">Help</span>
 
           <ul className="leading-10">
@@ -64,7 +64,7 @@ const Footer = (props: Props) => {
           </ul>
         </div>
 
-        <div>
+        <div className="mt-10 lg:mt-0">
           <span className="font-black mb-[35px] block mt-[10px]">Social Media</span>
 
           <ul className="flex items-center">
@@ -75,7 +75,7 @@ const Footer = (props: Props) => {
         </div>
       </div>
 
-      <div className="mt-[80px] flex flex-1 items-center justify-between">
+      <div className="mt-[80px] flex flex-wrap flex-1 items-center justify-between">
         <p className="text-xs leading-[22px] pt-[15px]">
           © Datawarehouse™, 2020. All rights reserved. <br />
           Company Registration Number: 21479524.

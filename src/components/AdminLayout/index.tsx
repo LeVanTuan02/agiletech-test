@@ -7,7 +7,7 @@ type AdminLayoutProps = {
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   return (
     <div className="font-inter h-screen flex">
-      <aside className="w-[320px] max-w-full bg-[#D9D9D9]">
+      <aside className="w-[320px] max-w-full bg-[#D9D9D9] hidden md:block">
         <Link to="/" className="block mt-[30px] ml-[100px] mb-10">
           <img src="/images/Logo.png" alt="Logo" />
         </Link>
@@ -22,7 +22,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         </ul>
       </aside>
 
-      <main className="pt-[120px] pl-[120px] pr-[124px] flex-1 h-screen overflow-y-auto">{children}</main>
+      <main className="p-10 md:pt-[120px] md:pl-[120px] md:pr-[124px] flex-1 h-screen overflow-y-auto">{children}</main>
     </div>
   );
 };
