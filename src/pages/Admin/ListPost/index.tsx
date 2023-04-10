@@ -2,14 +2,14 @@ import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Pagination from "../../../components/Pagination";
-import { useSelector } from "react-redux";
-import { getPosts, getTags, removePost, selectPaginationPost, selectPosts, selectTags } from "../../../redux/postSlice";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { updateTitle } from "../../../utils";
 import classNames from "classnames/bind";
 import styles from "./ListPost.module.css";
+import { Pagination as PaginationPost, PostParams } from "../../../models/post";
+import { PostApi } from "../../../api/postApi";
+import { Post } from "../../../models/post";
 
 const cx = classNames.bind(styles);
 
@@ -18,12 +18,10 @@ type Props = {};
 const ListPost = (props: Props) => {
   const [title, setTitle] = useState<string>("");
   const [tag, setTag] = useState<string>("");
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [pagination, setPagination] = useState<PaginationPost>();
   const [currentPage, setCurrentPage] = useState(1);
-
-  const dispatch = useDispatch<any>();
-  const posts = useSelector(selectPosts);
-  const tags = useSelector(selectTags);
-  const paginationPost = useSelector(selectPaginationPost);
 
   useEffect(() => {
     let params = {};
@@ -31,12 +29,10 @@ const ListPost = (props: Props) => {
     tag && (params = { ...params, tags: tag });
 
     (async () => {
-      dispatch(
-        getPosts({
-          page: currentPage,
-          ...params,
-        }),
-      );
+      getPosts({
+        page: currentPage,
+        ...params,
+      });
     })();
   }, [currentPage]);
 
@@ -45,7 +41,8 @@ const ListPost = (props: Props) => {
     updateTitle("Quản lý bài viết");
 
     (async () => {
-      dispatch(getTags());
+      const tags = await PostApi.getTags();
+      setTags(tags);
     })();
   }, []);
 
@@ -58,9 +55,20 @@ const ListPost = (props: Props) => {
     tag && (params = { ...params, tags: tag });
 
     (async () => {
-      dispatch(getPosts(params));
+      getPosts(params);
     })();
   }, [title, tag]);
+
+  const getPosts = async (params?: PostParams) => {
+    const { posts, ...rest } = await PostApi.getPosts(params);
+    setPagination({
+      total: rest.total,
+      totalPage: rest.total_page,
+      currentPage: rest.current_page,
+      limit: rest.page_size,
+    });
+    setPosts(posts);
+  };
 
   const handleRemovePost = (id: string) => {
     Swal.fire({
@@ -74,7 +82,8 @@ const ListPost = (props: Props) => {
       cancelButtonText: "Hủy",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await dispatch(removePost(id)).unwrap();
+        const idPost = await PostApi.removePost(id);
+        setPosts((prev) => prev.filter((item) => item.id !== idPost));
         Swal.fire("Thành công!", "Đã xóa bài viết", "success");
       }
     });
@@ -127,7 +136,7 @@ const ListPost = (props: Props) => {
         <tbody>
           {posts?.map((item, index) => (
             <tr key={index}>
-              <td className={cx("td")}>{(paginationPost.currentPage - 1) * paginationPost.limit + ++index}</td>
+              <td className={cx("td")}>{(pagination!.currentPage - 1) * pagination!.limit + ++index}</td>
               <td className={cx("td")}>{item.title}</td>
               <td className={cx("td")}>{item.description}</td>
               <td className={cx("td")}>{item.tags.map((tag) => tag).join(", ")}</td>
@@ -147,7 +156,7 @@ const ListPost = (props: Props) => {
       </table>
 
       <div className={cx("pagination")}>
-        <Pagination data={paginationPost} onChangePage={setCurrentPage} />
+        <Pagination data={pagination} onChangePage={setCurrentPage} />
       </div>
     </div>
   );

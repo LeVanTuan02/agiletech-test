@@ -2,15 +2,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { addPost, getTags } from "../../../redux/postSlice";
-import { useSelector } from "react-redux";
-import { selectTags } from "../../../redux/postSlice";
 import { useNavigate } from "react-router-dom";
 import { updateTitle } from "../../../utils";
 import classNames from "classnames/bind";
 import styles from "./AddPost.module.css";
+import { PostApi } from "../../../api/postApi";
 
 const cx = classNames.bind(styles);
 
@@ -27,8 +24,7 @@ const schema = yup.object().shape({
 });
 
 const AddPost = ({}: AddPostProps) => {
-  const dispatch = useDispatch<any>();
-  const tags = useSelector(selectTags);
+  const [tags, setTags] = useState<string[]>([]);
   const [listTag, setListTag] = useState<string[]>([]);
 
   const navigate = useNavigate();
@@ -38,7 +34,8 @@ const AddPost = ({}: AddPostProps) => {
     updateTitle("Thêm bài viết");
 
     (async () => {
-      dispatch(getTags());
+      const tags = await PostApi.getTags();
+      setTags(tags);
     })();
   }, []);
 
@@ -50,12 +47,10 @@ const AddPost = ({}: AddPostProps) => {
 
   const onSubmit: SubmitHandler<InputsType> = async (data) => {
     try {
-      await dispatch(
-        addPost({
-          ...data,
-          tags: listTag,
-        }),
-      ).unwrap();
+      await PostApi.addPost({
+        ...data,
+        tags: listTag,
+      });
       toast.success("Thêm bài viết thành công");
       navigate("/profile/posts");
     } catch (error) {
