@@ -2,16 +2,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { updatePost, getPosts, getTags } from "../../../redux/postSlice";
-import { useSelector } from "react-redux";
-import { selectTags } from "../../../redux/postSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "../../../models/post";
 import { updateTitle } from "../../../utils";
 import classNames from "classnames/bind";
 import styles from "./UpdatePost.module.css";
+import { PostApi } from "../../../api/postApi";
 
 const cx = classNames.bind(styles);
 
@@ -28,8 +25,7 @@ const schema = yup.object().shape({
 });
 
 const UpdatePostPage = ({}: UpdatePostProps) => {
-  const dispatch = useDispatch<any>();
-  const tags = useSelector(selectTags);
+  const [tags, setTags] = useState<string[]>([]);
   const [listTag, setListTag] = useState<string[]>([]);
   const { id, title } = useParams();
 
@@ -46,16 +42,11 @@ const UpdatePostPage = ({}: UpdatePostProps) => {
     updateTitle("Cập nhật bài viết");
 
     (async () => {
-      dispatch(getTags());
-
       // chưa có API detail post
-      const data = await dispatch(
-        getPosts({
-          title,
-        }),
-      ).unwrap();
+      const [tags, data] = await Promise.all([PostApi.getTags(), PostApi.getPosts({ title })]);
 
-      const post = data.posts.find((item: Post) => item.id === id);
+      const post = data.posts.find((item: Post) => item.id === id) as Post;
+      setTags(tags);
       reset(post);
       setListTag(post.tags);
     })();
@@ -63,13 +54,11 @@ const UpdatePostPage = ({}: UpdatePostProps) => {
 
   const onSubmit: SubmitHandler<InputsType> = async (data) => {
     try {
-      await dispatch(
-        updatePost({
-          id: id as string,
-          ...data,
-          tags: listTag,
-        }),
-      ).unwrap();
+      await PostApi.updatePost({
+        id: id as string,
+        ...data,
+        tags: listTag,
+      });
       toast.success("Cập nhật bài viết thành công");
       navigate("/profile/posts");
     } catch (error) {
