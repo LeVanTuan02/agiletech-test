@@ -1,89 +1,119 @@
 import { Link } from "react-router-dom";
+import styles from "./Footer.module.css";
+import classNames from "classnames/bind";
 
 type Props = {};
 
+const cx = classNames.bind(styles);
+
 const Footer = (props: Props) => {
   return (
-    <div className="my-container mx-auto mt-[96px] mb-[125px] font-avenir text-secondary">
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 lg:w-[42.5%]">
-          <Link to="" className="flex items-center mb-[65px]">
-            <img src="/images/Logo.png" alt="Logo" />
-            <span className="font-black text-xl leading-8 block ml-5">DataWarehouse</span>
-          </Link>
+    <footer className="container">
+      <div className={cx("footer")}>
+        <div className={cx("footer__top")}>
+          <div className={cx("footer__top-item-1")}>
+            <Link to="" className={cx("footer__bottom-logo-link")}>
+              <img src="/images/Logo.png" alt="Logo" />
+              <span className={cx("footer__bottom-logo-text")}>DataWarehouse</span>
+            </Link>
 
-          <p className="font-medium leading-[28.8px]">
-            Warehouse Society, 234 <br />
-            Bahagia Ave Street PRBW 29281
+            <p className={cx("footer__top-item-1-text")}>
+              Warehouse Society, 234 <br />
+              Bahagia Ave Street PRBW 29281
+            </p>
+
+            <p className={cx(["footer__top-item-1-text", "footer__top-item-1-text-last"])}>
+              <a href="mailto:info@warehouse.project" className={cx("footer__top-item-1-text-link")}>
+                info@warehouse.project
+              </a>{" "}
+              <br />
+              <a href="tel:1-232-3434" className={cx("footer__top-item-1-text-link")}>
+                1-232-3434
+              </a>{" "}
+              (Main)
+            </p>
+          </div>
+
+          <div className={cx("footer__top-item-2")}>
+            <span className={cx("footer__top-item-title")}>About</span>
+
+            <ul className={cx("footer__top-item-list")}>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Features
+                </Link>
+              </li>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  DW News
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className={cx("footer__top-item-3")}>
+            <span className={cx("footer__top-item-title")}>Help</span>
+
+            <ul className={cx("footer__top-item-list")}>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Support
+                </Link>
+              </li>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Sign up
+                </Link>
+              </li>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Guide
+                </Link>
+              </li>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Reports
+                </Link>
+              </li>
+              <li>
+                <Link to="" className={cx("footer__top-item-list-link")}>
+                  Q&A
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className={cx("footer__top-item-4")}>
+            <span className={cx("footer__top-item-title")}>Social Media</span>
+
+            <ul className={cx("footer__top-item-4-list")}>
+              <li className={cx("footer__top-item-4-list-item")}></li>
+              <li className={cx("footer__top-item-4-list-item")}></li>
+              <li className={cx("footer__top-item-4-list-item")}></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className={cx("footer__bottom")}>
+          <p className={cx("footer__bottom-text")}>
+            © Datawarehouse™, 2020. All rights reserved. <br />
+            Company Registration Number: 21479524.
           </p>
 
-          <p className="mt-[18px] text-secondary leading-[28.8px]">
-            <a href="mailto:info@warehouse.project">info@warehouse.project</a> <br />
-            <a href="tel:1-232-3434">1-232-3434</a> (Main)
-          </p>
-        </div>
-
-        <div className="w-full md:w-1/2 lg:w-[19.5%] mt-10 md:mt-0">
-          <span className="font-black mb-[35px] block mt-[10px]">About</span>
-
-          <ul className="leading-10">
-            <li>
-              <Link to="">Profile</Link>
-            </li>
-            <li>
-              <Link to="">Features</Link>
-            </li>
-            <li>
-              <Link to="">Careers</Link>
-            </li>
-            <li>
-              <Link to="">DW News</Link>
-            </li>
-          </ul>
-        </div>
-
-        <div className="w-full md:w-1/2 lg:w-[19%] mt-10 lg:mt-0">
-          <span className="font-black mb-[35px] block mt-[10px]">Help</span>
-
-          <ul className="leading-10">
-            <li>
-              <Link to="">Support</Link>
-            </li>
-            <li>
-              <Link to="">Sign up</Link>
-            </li>
-            <li>
-              <Link to="">Guide</Link>
-            </li>
-            <li>
-              <Link to="">Reports</Link>
-            </li>
-            <li>
-              <Link to="">Q&A</Link>
-            </li>
-          </ul>
-        </div>
-
-        <div className="mt-10 lg:mt-0">
-          <span className="font-black mb-[35px] block mt-[10px]">Social Media</span>
-
-          <ul className="flex items-center">
-            <li className="w-[50px] h-[50px] mr-[14px] rounded-full bg-secondary opacity-10"></li>
-            <li className="w-[50px] h-[50px] mr-[14px] rounded-full bg-secondary opacity-10"></li>
-            <li className="w-[50px] h-[50px] mr-[14px] rounded-full bg-secondary opacity-10"></li>
-          </ul>
+          <img src="/images/Group 64.png" alt="Img message" />
         </div>
       </div>
-
-      <div className="mt-[80px] flex flex-wrap flex-1 items-center justify-between">
-        <p className="text-xs leading-[22px] pt-[15px]">
-          © Datawarehouse™, 2020. All rights reserved. <br />
-          Company Registration Number: 21479524.
-        </p>
-
-        <img src="/images/Group 64.png" alt="" />
-      </div>
-    </div>
+    </footer>
   );
 };
 
