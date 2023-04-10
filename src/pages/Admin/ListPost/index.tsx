@@ -8,6 +8,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { updateTitle } from "../../../utils";
+import classNames from "classnames/bind";
+import styles from "./ListPost.module.css";
+
+const cx = classNames.bind(styles);
 
 type Props = {};
 
@@ -78,20 +82,17 @@ const ListPost = (props: Props) => {
 
   return (
     <div>
-      <div className="flex flex-wrap items-center">
-        <Link
-          to="/profile/posts/add"
-          className="mb-[35px] w-[252px] max-w-full h-[58px] flex items-center justify-center bg-primary rounded-[50px] font-bold text-white shadow-[0_5px_5px_rgba(75,93,104,0.1)] transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]"
-        >
+      <div className={cx("heading")}>
+        <Link to="/profile/posts/add" className={`btn btn-has-shadow ${cx("heading__btn")}`}>
           Add new
         </Link>
 
-        <form action="" className="flex flex-wrap items-center justify-end flex-1">
+        <form action="" className={cx("heading__form")}>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="max-w-full mb-[35px] font-inter w-[368px] h-[50px] outline-none border border-black rounded-[6px] bg-[#FDFDFD] px-[34px]"
+            className={cx("heading__form-control")}
             placeholder="Title"
           />
 
@@ -100,7 +101,7 @@ const ListPost = (props: Props) => {
             id=""
             value={tag}
             onChange={(e) => setTag(e.target.value)}
-            className="max-w-full mb-[35px] font-inter w-[368px] h-[50px] ml-[43px] outline-none border border-black rounded-[6px] bg-[#FDFDFD] px-[34px]"
+            className={cx("heading__form-control")}
           >
             <option value="">Tags</option>
             {tags.map((item, index) => (
@@ -112,37 +113,30 @@ const ListPost = (props: Props) => {
         </form>
       </div>
 
-      <table className="w-full table-fixed border border-collapse mb-[26px]">
+      <table className={cx("table")}>
         <thead>
           <tr>
-            <th className="p-3 text-xl border border-black text-center bg-[#D9D9D9] font-normal">ID</th>
-            <th className="p-3 text-xl border border-black text-center bg-[#D9D9D9] font-normal">Title</th>
-            <th className="p-3 text-xl border border-black text-center bg-[#D9D9D9] font-normal">Description</th>
-            <th className="p-3 text-xl border border-black text-center bg-[#D9D9D9] font-normal">Tags</th>
-            <th className="p-3 text-xl border border-black text-center bg-[#D9D9D9] font-normal">Actions</th>
+            <th className={cx("th")}>ID</th>
+            <th className={cx("th")}>Title</th>
+            <th className={cx("th")}>Description</th>
+            <th className={cx("th")}>Tags</th>
+            <th className={cx("th")}>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {posts?.map((item, index) => (
             <tr key={index}>
-              <td className="p-3 text-xl border border-black text-center bg-[#D9D9D9]">
-                {(paginationPost.currentPage - 1) * paginationPost.limit + ++index}
-              </td>
-              <td className="p-3 text-xl border border-black text-center bg-[#D9D9D9]">{item.title}</td>
-              <td className="p-3 text-xl border border-black text-center bg-[#D9D9D9]">{item.description}</td>
-              <td className="p-3 text-xl border border-black text-center bg-[#D9D9D9]">
-                {item.tags.map((tag) => tag).join(", ")}
-              </td>
-              <td className="p-3 text-xl border border-black text-center bg-[#D9D9D9]">
-                <div className="flex justify-center">
-                  <Link
-                    to={`/profile/posts/${item.id}/${item.title}/update`}
-                    className="px-3 transition hover:opacity-50"
-                  >
+              <td className={cx("td")}>{(paginationPost.currentPage - 1) * paginationPost.limit + ++index}</td>
+              <td className={cx("td")}>{item.title}</td>
+              <td className={cx("td")}>{item.description}</td>
+              <td className={cx("td")}>{item.tags.map((tag) => tag).join(", ")}</td>
+              <td className={cx("td")}>
+                <div className={cx("table-actions")}>
+                  <Link to={`/profile/posts/${item.id}/${item.title}/update`} className={cx("table-action")}>
                     <FontAwesomeIcon icon={faPen} />
                   </Link>
-                  <button onClick={() => handleRemovePost(item.id)} className="px-3 transition hover:opacity-50">
+                  <button onClick={() => handleRemovePost(item.id)} className={cx("table-action")}>
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>
@@ -152,8 +146,8 @@ const ListPost = (props: Props) => {
         </tbody>
       </table>
 
-      <div className="my-5">
-        <Pagination data={paginationPost} onChangePage={setCurrentPage} path="/profile/posts" />
+      <div className={cx("pagination")}>
+        <Pagination data={paginationPost} onChangePage={setCurrentPage} />
       </div>
     </div>
   );

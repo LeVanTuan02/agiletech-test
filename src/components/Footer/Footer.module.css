@@ -1,0 +1,134 @@
+.footer {
+  margin-top: 96px;
+  margin-bottom: 125px;
+}
+
+.footer__top {
+  font-family: "Avenir", sans-serif;
+  color: var(--secondary-color);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer__top-item-1 {
+  width: 42.5%;
+}
+
+.footer__top-item-2 {
+  width: 19.5%;
+}
+
+.footer__top-item-3 {
+  width: 19%;
+}
+
+.footer__top-item-title {
+  font-weight: 900;
+  margin-bottom: 35px;
+  display: block;
+  margin-top: 10px;
+  line-height: 24px;
+}
+
+.footer__top-item-list {
+  line-height: 40px;
+  list-style-type: none;
+}
+
+.footer__top-item-list-link {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.footer__top-item-4-list {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+
+.footer__top-item-4-list-item {
+  width: 50px;
+  height: 50px;
+  margin-right: 14px;
+  border-radius: 50px;
+  opacity: 0.1;
+  background-color: var(--secondary-color);
+}
+
+.footer__bottom-logo-link {
+  display: flex;
+  align-items: center;
+  margin-bottom: 65px;
+  text-decoration: none;
+}
+
+.footer__bottom-logo-text {
+  color: var(--secondary-color);
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 32px;
+  display: block;
+  margin-left: 20px;
+}
+
+.footer__top-item-1-text {
+  line-height: 28.8px;
+}
+
+.footer__top-item-1-text-link {
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+
+.footer__top-item-1-text-last {
+  margin-top: 18px;
+}
+
+.footer__bottom {
+  margin-top: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__bottom-text {
+  font-size: 1.2rem;
+  line-height: 22px;
+  padding-top: 15px;
+}
+
+/* responsive */
+/* mobile */
+@media (max-width: 739px) {
+  .footer__top-item-1,
+  .footer__top-item-2,
+  .footer__top-item-3 {
+    width: 100%;
+  }
+
+  .footer__top-item-2,
+  .footer__top-item-3,
+  .footer__top-item-4 {
+    margin-top: 40px;
+  }
+}
+
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .footer__top-item-1,
+  .footer__top-item-2,
+  .footer__top-item-3 {
+    width: 50%;
+  }
+
+  .footer__top-item-3,
+  .footer__top-item-4 {
+    margin-top: 40px;
+  }
+}
+
+/* pc */
+@media (min-width: 1024px) {
+}

@@ -7,6 +7,10 @@ import { useDispatch } from "react-redux";
 import { signin } from "../../redux/authSlice";
 import { useEffect } from "react";
 import { updateTitle } from "../../utils";
+import classNames from "classnames/bind";
+import styles from "./Signin.module.css";
+
+const cx = classNames.bind(styles);
 
 type Props = {};
 
@@ -45,34 +49,28 @@ const Signin = (props: Props) => {
   };
 
   return (
-    <div className="font-inter">
-      <div className="my-container mx-auto">
-        <Link to="/" className="mt-[62px] block">
+    <main className={cx("content")}>
+      <div className="container">
+        <Link to="/" className={cx("logo")}>
           <img src="/images/Logo.png" alt="Logo" />
         </Link>
       </div>
 
-      <div className="w-screen h-[calc(100vh-62px-36px)] flex items-center justify-center flex-col">
-        <h1 className="text-[64px] leading-[102px] mb-[36px]">Sign In</h1>
+      <div className={cx("form-wrap")}>
+        <h1 className={cx("title")}>Sign In</h1>
 
-        <form action="" className="px-3 max-w-full" onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="Username" className="leading-[25.6px] mb-3 block">
+        <form action="" className={cx("form")} onSubmit={handleSubmit(onSubmit)}>
+          <label htmlFor="Username" className={cx("form-label")}>
             Username
           </label>
 
-          <input
-            type="text"
-            {...register("username")}
-            className="w-[407px] max-w-full h-[57px] px-3 outline-none border bg-[#FDFDFD] rounded-[6px] border-black"
-          />
-          <span className="text-red-500 text-sm block mt-1.5 font-helvetica">{errors.username?.message}</span>
+          <input type="text" {...register("username")} className={cx("form-control")} />
+          <span className={cx("error-message")}>{errors.username?.message}</span>
 
-          <button className="bg-primary w-[413px] max-w-full h-[53px] mt-[46px] block rounded-full text-white transition-all hover:shadow-[inset_0_0_0_100px_rgba(0,0,0,0.2)]">
-            Signin
-          </button>
+          <button className={`btn ${cx("btn")}`}>Signin</button>
         </form>
       </div>
-    </div>
+    </main>
   );
 };
 
