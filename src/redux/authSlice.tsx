@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthApi } from "../api/authApi";
 import { RootState } from "./store";
-import { ACCESS_TOKEN_STORAGE_KEY } from "../constants";
+import { ACCESS_TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from "../constants";
 
 interface AuthState {
   isLogged: boolean;
@@ -22,6 +22,7 @@ const authSlice = createSlice({
     signout: (state) => {
       state.isLogged = false;
       localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+      localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
     },
   },
   extraReducers: (builder) => {
@@ -29,6 +30,7 @@ const authSlice = createSlice({
       if (payload.accessToken) {
         state.isLogged = true;
         localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, JSON.stringify(payload.accessToken));
+        localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, JSON.stringify(payload.refreshToken));
       }
     });
   },
