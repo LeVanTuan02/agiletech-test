@@ -1,25 +1,25 @@
 import { PostParams, PostResponse, PostData, Post } from "../models/post";
-import instance from "./instance";
+import { instanceV2 } from "./instance";
 
 export const PostApi = {
   getAll: (params?: PostParams): Promise<PostResponse> => {
-    return instance.get("/posts", {
+    return instanceV2.get("/posts", {
       params,
     });
   },
   getPost: (id: string): Promise<Post> => {
-    return instance.get(`/posts/${id}`);
+    return instanceV2.get(`/posts/${id}`);
   },
   getTags: (): Promise<string[]> => {
-    return instance.get("/posts/tags");
+    return instanceV2.get("/posts/tags");
   },
   addPost: (post: PostData): Promise<PostData> => {
-    return instance.post("/posts", post);
+    return instanceV2.post("/posts", post);
   },
   removePost: (id: string): Promise<string> => {
-    return instance.delete(`/posts/${id}`);
+    return instanceV2.delete(`/posts/${id}`);
   },
   updatePost: (post: Post): Promise<Post> => {
-    return instance.patch(`/posts/${post.id}`, post);
+    return instanceV2.patch(`/posts/${post.id}`, post);
   },
 };
