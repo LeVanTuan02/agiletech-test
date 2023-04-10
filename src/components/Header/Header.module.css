@@ -16,7 +16,7 @@
   margin-left: 32px;
   font-family: "Inter", sans-serif;
   font-weight: 700;
-  box-shadow: 0 5px 5px rgba(75, 93, 104, 0.1);
+  font-size: 1.6rem;
 }
 
 .header__top-right-btn:hover,

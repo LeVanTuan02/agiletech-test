@@ -3,6 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { signout } from "../../redux/authSlice";
 import { toast } from "react-toastify";
 import PrivateRouter from "../PrivateRouter";
+import classNames from "classnames/bind";
+import styles from "./AdminLayout.module.css";
+import { useEffect } from "react";
+
+const cx = classNames.bind(styles);
 
 type AdminLayoutProps = {
   children: JSX.Element;
@@ -18,27 +23,37 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     navigate("/signin");
   };
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <PrivateRouter>
-      <div className="font-inter h-screen flex">
-        <aside className="w-[320px] max-w-full bg-[#D9D9D9] hidden md:block">
-          <Link to="/" className="block mt-[30px] ml-[100px] mb-10">
+      <div className={cx("container")}>
+        <aside className={cx("sidebar")}>
+          <Link to="/" className={cx("sidebar__logo")}>
             <img src="/images/Logo.png" alt="Logo" />
           </Link>
 
           <ul>
-            <li className="ml-[34px] mb-[10px] text-xl leading-8 text-secondary">
-              <Link to="/profile/posts">Posts</Link>
+            <li className={cx("sidebar__menu-item")}>
+              <Link to="/profile/posts" className={cx("sidebar__menu-item-link")}>
+                Posts
+              </Link>
             </li>
-            <li className="ml-[34px] mb-[10px] text-xl leading-8 text-secondary">
-              <button onClick={handleSignout}>Logout</button>
+            <li className={cx("sidebar__menu-item")}>
+              <button onClick={handleSignout} className={cx("sidebar__menu-item-btn")}>
+                Logout
+              </button>
             </li>
           </ul>
         </aside>
 
-        <main className="p-10 md:pt-[120px] md:pl-[120px] md:pr-[124px] flex-1 h-screen overflow-y-auto">
-          {children}
-        </main>
+        <main className={cx("content")}>{children}</main>
       </div>
     </PrivateRouter>
   );

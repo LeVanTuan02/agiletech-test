@@ -10,6 +10,10 @@ import { selectTags } from "../../../redux/postSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "../../../models/post";
 import { updateTitle } from "../../../utils";
+import classNames from "classnames/bind";
+import styles from "./UpdatePost.module.css";
+
+const cx = classNames.bind(styles);
 
 type UpdatePostProps = {};
 
@@ -87,25 +91,25 @@ const UpdatePostPage = ({}: UpdatePostProps) => {
 
   return (
     <div>
-      <h1 className="font-medium text-2xl uppercase text-center block mb-10">Cập nhật bài viết</h1>
+      <h1 className={cx("title")}>Cập nhật bài viết</h1>
 
       <form action="" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-3">
-          <label htmlFor="form__add-post-title" className="block font-medium text-gray-700">
+        <div className={cx("form-group")}>
+          <label htmlFor="form__add-post-title" className={cx("form-label")}>
             Tiêu đề bài viết
           </label>
           <input
             type="text"
             {...register("title")}
             id="form__add-post-title"
-            className="py-2 px-3 mt-1 border focus:ring-primary focus:border-primary focus:outline-none block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            className={cx("form-control")}
             placeholder="Nhập tiêu đề bài viết"
           />
-          <span className="text-sm mt-2 text-red-500">{errors.title?.message}</span>
+          <span className={cx("error-message")}>{errors.title?.message}</span>
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="form__add-post-desc" className="block font-medium text-gray-700">
+        <div className={cx("form-group")}>
+          <label htmlFor="form__add-post-desc" className={cx("form-label")}>
             Mô tả bài viết
           </label>
 
@@ -113,40 +117,34 @@ const UpdatePostPage = ({}: UpdatePostProps) => {
             rows={10}
             {...register("description")}
             id="form__add-post-desc"
-            className="py-2 px-3 mt-1 border focus:ring-primary focus:border-primary focus:outline-none block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            className={cx("form-control")}
             placeholder="Nhập tiêu đề bài viết"
           ></textarea>
-          <span className="text-sm mt-2 text-red-500">{errors.description?.message}</span>
+          <span className={cx("error-message")}>{errors.description?.message}</span>
         </div>
 
-        <fieldset>
-          <legend className="text-sm font-semibold leading-6 text-gray-900">Tags</legend>
+        <div>
+          <label className={cx("form-label")}>Tags</label>
           {tags.map((item, index) => (
-            <div className="space-y-6" key={index}>
-              <div className="relative flex gap-x-3">
-                <div className="flex h-6 items-center">
+            <div className={cx("checkbox-list")} key={index}>
+              <div className={cx("checkbox-list-item")}>
+                <div className={cx("checkbox-list-item-row")}>
                   <input
                     id={item}
                     checked={listTag.includes(item)}
                     onChange={() => handleCheckTag(item)}
                     type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                 </div>
-                <div className="text-sm leading-6">
-                  <label htmlFor={item} className="font-medium text-gray-900">
-                    {item}
-                  </label>
-                </div>
+                <label htmlFor={item} className={cx("checkbox-list-item-text")}>
+                  {item}
+                </label>
               </div>
             </div>
           ))}
-        </fieldset>
+        </div>
 
-        <button
-          type="submit"
-          className="mt-5 ml-auto block py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
+        <button type="submit" className={cx("form-btn")}>
           Cập nhật bài viết
         </button>
       </form>

@@ -30,19 +30,19 @@ const Header = (props: Props) => {
 
         <div className={cx("header__top-right")}>
           {!isLogged ? (
-            <Link to="/signin" className={`btn ${cx("header__top-right-btn")}`}>
+            <Link to="/signin" className={`btn btn-has-shadow ${cx("header__top-right-btn")}`}>
               Sign In
             </Link>
           ) : (
             <>
               <Link
                 to="/profile/posts"
-                className={`btn ${cx(["header__top-right-btn", "header__top-right-btn-profile"])}`}
+                className={`btn btn-has-shadow ${cx(["header__top-right-btn", "header__top-right-btn-profile"])}`}
               >
                 Profile
               </Link>
 
-              <button onClick={handleSignout} className={`btn ${cx("header__top-right-btn")}`}>
+              <button onClick={handleSignout} className={`btn btn-has-shadow ${cx("header__top-right-btn")}`}>
                 Logout
               </button>
             </>
