@@ -9,6 +9,8 @@ import { updateTitle } from "../../utils";
 import classNames from "classnames/bind";
 
 import styles from "./Home.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -151,6 +153,22 @@ const HomePage = (props: Props) => {
             <h2 className={cx("testimonials__title")}>Testimonials</h2>
 
             <div className={cx("testimonials__slider")}>
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className={cx(["testimonials__slider-arrow", "testimonials__slider-arrow--left"])}
+              />
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className={cx(["testimonials__slider-arrow", "testimonials__slider-arrow--right"])}
+              />
+
+              {/* dots */}
+              <ul className={cx("testimonials__slider-dots")}>
+                <li className={cx("testimonials__slider-dot")}></li>
+                <li className={cx("testimonials__slider-dot", { "testimonials__slider-dot--active": true })}></li>
+                <li className={cx("testimonials__slider-dot")}></li>
+              </ul>
+
               {galleries?.map(
                 (item, index) =>
                   index == 1 && (
