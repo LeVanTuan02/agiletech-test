@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header";
-import SliderArrow from "../../components/SliderArrow";
 import Footer from "../../components/Footer";
 import { GalleryResponse } from "../../models/gallery";
 import { GalleryApi } from "../../api/galleryApi";
@@ -18,6 +17,8 @@ type Props = {};
 
 const HomePage = (props: Props) => {
   const [galleries, setGalleries] = useState<GalleryResponse[]>([]);
+  // index slide
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     updateTitle("Trang chủ");
@@ -28,16 +29,23 @@ const HomePage = (props: Props) => {
     })();
   }, []);
 
-  const settings = {
-    autoplay: true,
-    infinite: true,
-    dots: true,
-    nextArrow: <SliderArrow direction="right" onClick={() => {}} />,
-    prevArrow: <SliderArrow onClick={() => {}} />,
-    customPaging: function (i: number) {
-      return <div className="slider__dot"></div>;
-    },
-  };
+  // autoplay slide
+  useEffect(() => {
+    const lastIndexSlide = galleries.length - 1;
+    if (currentIndex > lastIndexSlide) {
+      setCurrentIndex(0);
+    }
+
+    if (currentIndex < 0) {
+      setCurrentIndex(lastIndexSlide);
+    }
+
+    let timerId = setInterval(() => setCurrentIndex((prev) => prev + 1), 3000);
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [currentIndex]);
 
   return (
     <div>
@@ -154,26 +162,42 @@ const HomePage = (props: Props) => {
 
             <div className={cx("testimonials__slider")}>
               <FontAwesomeIcon
+                onClick={() => setCurrentIndex((prev) => prev - 1)}
                 icon={faArrowLeft}
                 className={cx(["testimonials__slider-arrow", "testimonials__slider-arrow--left"])}
               />
               <FontAwesomeIcon
+                onClick={() => setCurrentIndex((prev) => prev + 1)}
                 icon={faArrowRight}
                 className={cx(["testimonials__slider-arrow", "testimonials__slider-arrow--right"])}
               />
 
               {/* dots */}
               <ul className={cx("testimonials__slider-dots")}>
-                <li className={cx("testimonials__slider-dot")}></li>
-                <li className={cx("testimonials__slider-dot", { "testimonials__slider-dot--active": true })}></li>
-                <li className={cx("testimonials__slider-dot")}></li>
+                {galleries.map((_, index) => (
+                  <li
+                    onClick={() => setCurrentIndex(index)}
+                    className={cx("testimonials__slider-dot", {
+                      "testimonials__slider-dot--active": index === currentIndex,
+                    })}
+                  ></li>
+                ))}
               </ul>
 
-              {galleries?.map(
-                (item, index) =>
-                  index == 1 && (
+              <div className={cx("testimonials__slider-item-wrap")}>
+                {galleries?.map((item, index) => {
+                  let position = "next-slide";
+                  if (index === currentIndex) {
+                    position = "active-slide";
+                  }
+
+                  if (index === currentIndex - 1 || (currentIndex === 0 && index === galleries.length - 1)) {
+                    position = "prev-slide";
+                  }
+
+                  return (
                     <div key={item.id}>
-                      <div className={cx("testimonials__slider-item")}>
+                      <div className={cx(["testimonials__slider-item", position])}>
                         <img src={item.imageUrl} alt={item.id} className={cx("testimonials__slider-item-avatar")} />
                         <div className={cx("testimonials__slider-item-user")}>
                           <span className={cx("testimonials__slider-item-user-name")}>John Fang </span>
@@ -182,8 +206,9 @@ const HomePage = (props: Props) => {
                         </div>
                       </div>
                     </div>
-                  ),
-              )}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>

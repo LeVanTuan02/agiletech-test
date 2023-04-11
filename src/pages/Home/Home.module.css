@@ -177,6 +177,7 @@
 
 .testimonials__slider {
   width: 932px;
+  height: 330px;
   max-width: 100%;
   margin: 0 auto;
   position: relative;
@@ -190,6 +191,7 @@
   font-size: 2rem;
   cursor: pointer;
   transition: all 0.25s linear;
+  z-index: 1;
 }
 
 .testimonials__slider-arrow--right {
@@ -234,16 +236,43 @@
 }
 
 .testimonials__slider-item {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   margin-bottom: 20px;
   display: flex;
   align-items: start;
-  height: 330px;
+  height: 100%;
   padding-left: 101px;
   padding-top: 60px;
   background-color: #fff;
   border-radius: 20px;
   margin: 0 auto;
   box-shadow: 0 20px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.25s linear;
+  opacity: 0;
+}
+
+.testimonials__slider-item.next-slide {
+  transform: translateX(100%);
+}
+
+.testimonials__slider-item.active-slide {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.testimonials__slider-item.prev-slide {
+  transform: translateX(-100%);
+}
+
+.testimonials__slider-item-wrap {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .testimonials__slider-item-avatar {
@@ -326,8 +355,11 @@
   .testimonials__slider-item {
     flex-direction: column;
     align-items: center;
-    height: 500px;
     padding: 32px 12px;
+  }
+
+  .testimonials__slider {
+    height: 500px;
   }
 
   .testimonials__slider-item-user {
@@ -350,7 +382,7 @@
     margin-left: 0;
   }
 
-  .testimonials__slider-item {
+  .testimonials__slider {
     height: 400px;
   }
 }
